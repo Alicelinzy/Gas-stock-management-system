@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <title>  ALI GAS STOCK MANAGEMENT SYSTEM</title>
+    
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="description" content=" ALI GAS STOCK MANAGEMENT SYSTEM">
+    <meta name="author" content="Bizimana King Sharoon">    
+    <link rel="shortcut icon" href="favicon.ico"> 
+    
+    <!-- FontAwesome JS-->
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    
+    <!-- App CSS -->  
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+
+</head> 
+
+<body class="app app-login p-0">    	
+    <div class="row g-0 app-auth-wrapper">
+	    <div class="col-12 col-md-12 col-lg-12 auth-main-col text-center p-5">
+		    <div class="d-flex flex-column align-content-end">
+			    <div class="app-auth-body mx-auto">	
+				    <div class="app-auth-branding mb-4"><a class="app-logo" href="./"><img class="logo-icon" style = "object-fit: contain; width: 250px;" src="favicon.jpg" alt="logo"></a></div>
+					<h2 class="auth-heading text-center mb-5">SIgn In </h2>
+			        <div class="auth-form-container text-start">
+			        	   <div class="alert app-btn-primary" class="alert"  id="alert_message"  style="display: none;" role="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+</div>
+						<form class="auth-form login-form" id="add-login">         
+							<div class="email mb-3">
+								<label class="" for="signin-email">Phonenumber</label>
+								<input id="username" name="username" type="text" class="form-control signin-email" placeholder="Enter phonenumber">
+							</div><!--//form-group-->
+							<div class="password mb-3">
+								<label class="" for="signin-password">Password</label>
+								<input id="password" name="password" type="password" class="form-control signin-password" placeholder="Enter Password" >
+								<div class="extra mt-3 row justify-content-between">
+									<div class="col-6">
+										
+									</div><!--//col-6-->
+									<div class="col-6">
+										<div class="forgot-password text-end">
+											<a href="#">Forgot password?</a>
+										</div>
+									</div><!--//col-6-->
+								</div><!--//extra-->
+							</div><!--//form-group-->
+							<div class="text-center">
+								<button type="submit" id="kalisa" class="btn app-btn-primary w-100 btn-bg mx-auto">Log In</button>
+								<alert  id="kamana" style="display:none;" class="btn app-btn-primary w-100 theme-btn mx-auto">processing ...</alert>
+							</div>
+						</form>
+                        <div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link" href="signup" >here</a>.</div>
+					</div><!--//auth-form-container-->	
+
+			    </div><!--//auth-body-->
+		    
+			  	
+		    </div><!--//flex-column-->   
+	    </div><!--//auth-main-col-->
+	   
+    
+    </div><!--//row-->
+
+
+</body>
+</html> 
+<script src="assets/jquery/jquery.js"></script>
+  <script>
+   $(document).ready(function(){
+$(document).on('submit', '#add-login', function(event2){
+        event2.preventDefault();
+        var username = $('#username').val();
+        var password = $('#password').val();
+  
+        if(username != '' && password != '')
+        {
+        
+            $.ajax({
+                url:"login-html",
+                method:'POST',
+                data:new FormData(this),
+                contentType:false,
+                processData:false,
+                dataType: 'json',
+                success: function(data)
+                { 
+
+                  if(data.error){
+                  document.getElementById("alert_message").style.display = "block";
+                  $('#alert').show();
+                  $('#alert_message').html(data.message);
+        }
+        else{
+                  document.getElementById("kalisa").style.display = "none";
+                  document.getElementById("kamana").style.display="block";
+                  document.getElementById("alert_message").style.display = "block";
+                  $('#alert').show();
+                  $('#alert_message').html(data.message);
+
+                 setTimeout(function () {
+                 window.location.href = data.location;
+                  }, 2000);
+           }
+                 
+                }
+            });
+        }
+     
+        else
+        {
+            document.getElementById("alert_message").style.display = "block";
+              $('#alert').show();
+          $('#alert_message').html("All Fields are Required");
+           
+        }
+    });
+ });
+     </script>
+
